@@ -1,0 +1,25 @@
+In Dart and Flutter, isolates are separate memory-separated instances of the Dart runtime, which means that each isolate runs 
+independently of others, utilizing its own memory and CPU resources. When you spawn multiple isolates, they can execute concurrently,
+ taking advantage of multi-core processors.
+
+The concurrency of isolates in Dart isn't directly dependent on the number of available threads. Dart uses an event loop model 
+where isolates run concurrently but not necessarily in parallel on separate CPU cores. The number of cores and threads that Dart 
+can utilize may depend on the underlying system's capabilities and optimizations by the Dart runtime.
+
+If you spawn 10 isolates simultaneously, they can execute concurrently, but the degree of parallelism (how many actually 
+run simultaneously) might be influenced by various factors:
+
+CPU Cores: If the underlying hardware has multiple cores, Dart can distribute isolates across these cores, allowing them to run more concurrently.
+
+Scheduler: Dart's scheduler manages isolates and their tasks. The scheduler tries to utilize available resources 
+effectively but may also manage how isolates are scheduled and run based on available resources and other factors.
+
+Workload and Blocking Operations: If isolates perform CPU-intensive tasks and the hardware has sufficient cores, 
+they might execute simultaneously. However, if the tasks are I/O-bound or involve waiting for external resources 
+(network, file system), Dart might switch to other isolates while waiting, thus increasing overall concurrency but not necessarily parallelism.
+
+System Load: The overall system load and resources available can affect how many isolates can effectively run concurrently.
+
+Remember that while Dart isolates provide concurrent execution, how they're scheduled and how many run simultaneously 
+may depend on various factors, including the runtime environment, the nature of the workload, and the underlying hardware.
+ Therefore, spawning multiple isolates doesn't guarantee a direct one-to-one parallel execution based solely on the number of available threads or cores.
