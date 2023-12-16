@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 
@@ -8,19 +9,27 @@ class ThreadPool {
     ReceivePort thread1RecPort = ReceivePort(thread1);
     IsolateNameServer.registerPortWithName(
         thread1RecPort.sendPort, Isolate.current.debugName!);
-    // await for (Function() data in thread1RecPort) {
-    //   final result = data.call();
-    //   mainThreadPort.send(result);
-    // }
+    await for (final List data in thread1RecPort) {
+      final fnc = data[0];
+      final arg = data[1];
+      if (fnc is Function) {
+        final result = fnc.call(arg ?? Never);
+        mainThreadPort.send(result);
+      }
+    }
   }
 
   static Future<void> thead2Callback(SendPort mainThreadPort) async {
-    ReceivePort thread2RecPort = ReceivePort(thread1);
+    ReceivePort thread2RecPort = ReceivePort(thread2);
     IsolateNameServer.registerPortWithName(
         thread2RecPort.sendPort, Isolate.current.debugName!);
-    await for (Function() data in thread2RecPort) {
-      final result = data.call();
-      mainThreadPort.send(result);
+    await for (final List data in thread2RecPort) {
+      final fnc = data[0];
+      final arg = data[1];
+      if (fnc is Function) {
+        final result = fnc.call(arg ?? Never);
+        mainThreadPort.send(result);
+      }
     }
   }
 
@@ -55,11 +64,13 @@ class ThreadPool {
         onError: errorPort.sendPort);
   }
 
-  static void excTaskInThread1<T>(T Function() task) {
-    IsolateNameServer.lookupPortByName(thread1)!.send(() {});
+  static void excTaskInThread1<R, P>(
+      FutureOr<R> Function(P argument) function, P argument) {
+    IsolateNameServer.lookupPortByName(thread1)!.send([function, argument]);
   }
 
-  static void excTaskInThread2<T>(T Function() task) {
-    IsolateNameServer.lookupPortByName(thread2)!.send(task);
+  static void excTaskInThread2<R, P>(
+      FutureOr<R> Function(P argument) function, P argument) {
+    IsolateNameServer.lookupPortByName(thread2)!.send([function, argument]);
   }
 }
