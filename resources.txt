@@ -1,0 +1,14 @@
+https://scribe.rip/dart-is-indeed-multi-threaded-94e75f66aa1e
+https://blog.logrocket.com/multithreading-flutter-using-dart-isolates/
+https://stackoverflow.com/questions/71746186/multiple-isolates-vs-one-isolate
+https://pub.dev/packages/isolate_pool_2/example
+https://pub.dev/packages/isolate_functions/example
+https://pub.dev/packages/fcm_shared_isolate
+
+https://scribe.rip/flutter-community/isolates-in-flutter-a0dd7a18b7f6
+https://medium.com/@purvajg/microtasks-and-event-loops-in-dart-9f5863f031d8
+https://plugfox.dev/android-background-service-with-flutter/
+https://plugfox.dev/mastering-isolates/
+https://www.reddit.com/r/FlutterDev/comments/xjatr3/isolate_pooling_necessary/
+https://dev.to/maximsaplin/efficient-dart-optimizing-cpu-bound-load-in-flutter-without-missing-a-frame-5dme
+
