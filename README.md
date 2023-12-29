@@ -2,7 +2,6 @@
 
 ## research on isolates :
 - includes diff implementation to check how multiple isolate affects UI rendering ,performance ,similarity with threads ,concurrency ,allocation of isolates
-created a isolate pool system similar to thread pool 
 
 - isolate pool idea:
   
